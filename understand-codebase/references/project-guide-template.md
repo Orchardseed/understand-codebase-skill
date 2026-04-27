@@ -1,181 +1,283 @@
-# PROJECT_CODE_GUIDE.md Template
+# PROJECT_CODE_GUIDE.md Templates
 
-Use this structure for the generated guide. Translate section titles when the user requests a non-English guide.
+Use the template that matches the selected guide mode. Translate section titles when the user requests a non-English guide.
+
+## Shared Evidence Legend
+
+Include this near the top of every guide:
 
 ```markdown
-# Project Code Guide
-
 ## Evidence Legend
 
 - Confirmed: explicitly shown in code, docs, schemas, tests, comments, or config.
 - Runtime verified: checked by a safe command, test, dry run, route listing, CLI help output, or minimal sample.
 - Static inference: inferred from conventions, signatures, model structure, or surrounding code.
 - Unknown: cannot be determined from available code and safe checks.
+```
 
-## 1. Project Overview
+## Template A: Engineer Fast-Start
 
-Explain the project in beginner-friendly language:
+Use this for quick engineering handoff, running, testing, debugging, and modifying.
+
+```markdown
+# Project Code Guide
+
+Guide mode: Engineer Fast-Start
+
+## Evidence Legend
+
+- Confirmed:
+- Runtime verified:
+- Static inference:
+- Unknown:
+
+## 1. Project Snapshot
+
+- Purpose:
+- Project type:
+- Main language/framework:
+- Primary entrypoint:
+- Primary output:
+- Most important directories:
+
+## 2. Runbook
+
+### Install
+
+- Command:
+- Evidence:
+
+### Run
+
+- Command:
+- What it starts:
+- First file reached:
+- Config loaded:
+- Evidence:
+
+### Test
+
+- Command:
+- What it covers:
+- Evidence:
+
+### Debug / Logs
+
+- Debug command:
+- Log location:
+- Common failure points:
+
+## 3. Entrypoints and Runtime Flow
+
+Summarize the main path:
+
+1. Command:
+2. Entrypoint file/function:
+3. Config initialization:
+4. Core service/model/pipeline:
+5. Output:
+
+Add a Mermaid flowchart when it improves scanning.
+
+## 4. Configuration and Environment
+
+List required and important configs:
+
+| Name | Source | Used by | Effect | Evidence |
+| --- | --- | --- | --- | --- |
+
+## 5. Data Contracts and Shape Summary
+
+Summarize key inputs and outputs:
+
+| Data | Source | Shape/Schema/Type | Destination | Evidence |
+| --- | --- | --- | --- | --- |
+
+## 6. Key Files for Modification
+
+| Task | File(s) | What to change | Risk | Evidence |
+| --- | --- | --- | --- | --- |
+
+## 7. Core Components
+
+Explain only the components an engineer needs to modify or debug:
+
+- Component:
+- Responsibility:
+- Called by:
+- Depends on:
+- Modification risk:
+
+## 8. Tests and Validation Strategy
+
+- Fast tests:
+- Integration tests:
+- Shape/data checks:
+- Manual smoke test:
+- Checks not run:
+
+## 9. Main Dependencies and Their Project Roles
+
+| Dependency | Role in this project | Where used | Evidence |
+| --- | --- | --- | --- |
+
+## 10. Risks, Unknowns, and Follow-Ups
+
+- Risk:
+- Unknown:
+- Needs runtime verification:
+```
+
+## Template B: Beginner Runtime Tutorial
+
+Use this for step-by-step learning through actual execution. This mode should read like following the program in a debugger.
+
+```markdown
+# Project Code Guide
+
+Guide mode: Beginner Runtime Tutorial
+
+## Evidence Legend
+
+- Confirmed:
+- Runtime verified:
+- Static inference:
+- Unknown:
+
+## 1. What This Project Does
+
+Explain the project in plain language:
 
 - What problem it solves
-- Main technology/framework
-- Main runtime mode
-- Most important concepts to know before reading code
+- What kind of program it is
+- What the selected runtime flow does
+- What concepts a beginner should know first
 
-Quick anchors:
+## 2. Selected Runtime Path
 
-- Main language:
-- Project type:
-- Primary entrypoint:
-- Main output:
+- User-selected focus:
+- Default path used:
+- Input data being traced:
+- Model/service/workflow being traced:
+- Start command or entrypoint:
+- Expected final output:
 
-## 2. Quick Start, Entrypoints, and Runtime Commands
+## 3. Before the Code Runs
 
-List startup commands found in docs, package scripts, Makefiles, Dockerfiles, CLI definitions, notebooks, or framework conventions.
+Explain setup that affects execution:
 
-For each command, explain:
+- Important config files:
+- Environment variables:
+- External files/data:
+- Dependencies/libraries that matter in this path:
 
-- What it starts
-- Which file it reaches first
-- Which configs it loads
-- Whether the command was runtime verified, statically inferred, or unknown
+## 4. Step-by-Step Runtime Walkthrough
 
-## 3. Directory Map
+Repeat this block for each meaningful execution step.
 
-Explain important directories by role.
+### Step N: <plain-language action>
 
-Mark each as:
+Location:
 
-- Read first
-- Read next
-- Read later
-- Skip initially
+- `<file>:<line>` or `<file>:<start-line>-<end-line>`
 
-## 4. Recommended Reading Order
+Code goal:
 
-Give a numbered path through the codebase. For each step:
+- Explain what this code is trying to accomplish.
 
-- File or directory
-- Why to read it now
-- What question it answers
-- What to ignore on first pass
+Libraries, classes, and methods used:
 
-## 5. Core Runtime Flow
+- `<library_or_module>.<method>()`: what it does here
+- `<local_function>()`: why this project calls it
 
-Trace the primary execution path from entrypoint to output.
+Input:
 
-Include a Mermaid flowchart when helpful.
-
-For composite projects, state the chosen primary flow and briefly summarize secondary flows.
-
-## 6. Data Sources, Data Flow, and Shape Tracking
-
-For each important data path:
-
+- Name:
 - Source:
-- Reader:
-- Raw format:
-- Transform steps:
-- Intermediate shape/schema/type:
-- Final destination:
-- Evidence label:
+- Shape/schema/type:
+- Example value or keys:
+- Evidence:
 
-For tensors, prefer forms like:
+What happens:
+
+1. First operation
+2. Next operation
+3. Important branch, loop, transform, validation, model call, or side effect
+
+Output:
+
+- Name:
+- Shape/schema/type:
+- Destination:
+- Evidence:
+
+Next code path:
+
+- Goes to `<file>:<line>` / `<function>` because ...
+
+Beginner note:
+
+- Explain the one concept the reader should understand before continuing.
+
+## 5. Important Loops and Branches
+
+For each important loop/branch:
+
+- Location:
+- Why it repeats or branches:
+- Input per iteration:
+- Output per iteration:
+- Stop condition:
+- Evidence:
+
+## 6. Data and Shape Timeline
+
+Show the data contract changing over time:
+
+| Step | Variable/Data | Shape/Schema/Type | Changed by | Evidence |
+| --- | --- | --- | --- | --- |
+
+Examples:
 
 - Raw image: `[H, W, C]`
-- Transform output: `[C, H, W]`
+- Tensor image: `[C, H, W]`
 - Batch: `[B, C, H, W]`
-- Tokens: `[B, T]`
+- Token ids: `[B, T]`
 - Hidden states: `[B, T, D]`
-- Logits: `[B, num_classes]` or `[B, T, vocab_size]`
-
-For non-tensor data, describe schema:
-
 - HTTP body: `{ user_id, items[], created_at }`
-- Table rows: `[N rows x M columns]`, with important columns
-- Service object: `OrderSummaryDTO`
-- Database rows: `List[OrderRow]`
 
-## 7. Core Modules, Classes, and Functions
+## 7. Libraries and Methods Used in This Runtime Path
 
-Explain the important files, classes, functions, services, and components.
+Explain only libraries/methods actually used in the walkthrough:
 
-For each:
+| Library/Method | Step | What it does here | Beginner explanation |
+| --- | --- | --- | --- |
 
-- Responsibility
-- Who calls it
-- What it depends on
-- Important inputs and outputs
-- Why it matters
+## 8. Where to Read Next
 
-## 8. Key Loops, Pipelines, and Workflows
+Give a learning path:
 
-Explain loops and repeated workflows:
+1. Read `<file>` to understand ...
+2. Read `<file>` to understand ...
+3. Skip `<file>` initially because ...
 
-- Training loops
-- Inference pipelines
-- Request handlers
-- Worker queues
-- Data processing pipelines
-- Frontend state/update loops
-- CLI command workflows
+## 9. Unknowns and Items That Need Runtime Verification
 
-For each loop:
+List:
 
-- What repeats
-- What state changes
-- Stop condition
-- Inputs and outputs per iteration
-
-## 9. Configuration, Environment Variables, and Parameters
-
-Explain:
-
-- Config files
-- Environment variables
-- CLI flags
-- Default values
-- Required values
-- How config reaches core code
-- Differences between dev/test/prod if visible
-
-## 10. Main Dependencies and Their Roles
-
-List important dependencies and explain what each one does in this project.
-
-Avoid generic package descriptions unless needed for beginners.
-
-## 11. Testing, Debugging, and Logging
-
-Explain:
-
-- How tests are organized
-- How to run relevant tests
-- Useful debug commands
-- Where logs are created
-- Which tests or commands were runtime verified
-
-## 12. Notes for Future Code Changes
-
-Explain where a developer should modify code for common tasks.
-
-Call out risks:
-
-- Files with broad impact
-- Dynamic loading
-- Shared configuration
-- Hidden coupling
-- External service assumptions
-- Shape/schema assumptions
-
-## 13. Unknowns and Items That Need Runtime Verification
-
-List anything not fully verified:
-
+- Lines not reached statically
+- Dynamic dispatch
 - Missing sample data
-- Missing credentials
-- External services
-- Generated files
-- Ambiguous entrypoints
 - Unverified shapes
 - Commands not run
+- External services or credentials needed
 ```
+
+## Template C: Both
+
+If the user asks for both, write:
+
+1. A concise Engineer Fast-Start section first.
+2. A Beginner Runtime Tutorial section second.
+
+Keep the fast-start section short. Put detailed line-by-line explanation in the tutorial section.

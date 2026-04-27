@@ -1,6 +1,11 @@
 # understand-codebase
 
-`understand-codebase` is a portable coding-agent skill for learning unfamiliar projects. It guides an agent to inspect a repository and produce one complete `PROJECT_CODE_GUIDE.md` that explains entrypoints, runtime flow, data sources, data shapes or schemas, core modules, key loops, dependencies, tests, and recommended reading order.
+`understand-codebase` is a portable coding-agent skill for learning unfamiliar projects. It guides an agent to inspect a repository and produce one complete `PROJECT_CODE_GUIDE.md`.
+
+The skill now supports two guide modes:
+
+- **Engineer Fast-Start:** for engineers who need to run, test, debug, modify, or quickly onboard to a project.
+- **Beginner Runtime Tutorial:** for learners who want to follow the actual execution path step by step, including file lines, libraries/methods, inputs, outputs, shape/schema, and the next code path.
 
 The guide defaults to English. If the user requests another language, or appears to prefer another language, the agent should ask whether to keep English or switch.
 
@@ -76,15 +81,25 @@ AGENTS.md
 
 ## Usage Examples
 
-Ask your coding agent:
+Engineer Fast-Start:
 
 ```text
-Use understand-codebase to read this project and generate PROJECT_CODE_GUIDE.md.
+Use understand-codebase to create an engineer fast-start guide so I can run tests and modify this project.
 ```
+
+Beginner Runtime Tutorial:
+
+```text
+Use understand-codebase to create a beginner runtime tutorial. Walk through the actual code execution with line numbers, libraries, inputs, outputs, and next code path.
+```
+
+Composite project with default path:
 
 ```text
 Help me understand this inference framework. Default path is fine.
 ```
+
+Shape-focused:
 
 ```text
 Generate a beginner-friendly guide for this training project, including input and output shapes.

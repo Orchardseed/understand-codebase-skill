@@ -1,15 +1,31 @@
 # Analysis Checklist
 
-Use this checklist while inspecting a repository. Keep the final guide focused on what helps a newcomer learn the project.
+Use this checklist while inspecting a repository. Keep the final guide aligned with the selected mode.
 
-## 1. Top-Level Context
+## 1. Clarification Checklist
+
+Resolve these before writing:
+
+- Language: English by default, or user-requested language.
+- Guide mode:
+  - Engineer Fast-Start
+  - Beginner Runtime Tutorial
+  - Both
+- Composite flow focus:
+  - Input data to trace
+  - Model/service/backend/workflow to trace
+  - Training, inference, evaluation, API serving, data processing, or end-to-end operation
+
+Infer when obvious. Ask one focused question when unclear.
+
+## 2. Top-Level Context
 
 - Read README, docs, examples, notebooks, and comments that explain purpose.
 - Inspect dependency files such as `package.json`, `pyproject.toml`, `requirements.txt`, `Cargo.toml`, `go.mod`, `pom.xml`, or `environment.yml`.
 - Inspect scripts, Makefiles, Dockerfiles, compose files, CI workflows, and task runners.
 - Identify generated, vendored, build, cache, and artifact directories so they can be skipped initially.
 
-## 2. Project Type
+## 3. Project Type
 
 Classify the project as one or more:
 
@@ -23,16 +39,6 @@ Classify the project as one or more:
 - Worker or scheduler
 - Desktop or mobile app
 - Mixed or composite system
-
-## 3. Composite Project Narrowing
-
-If several flows are plausible, ask one focused question at a time:
-
-- Which input data should be traced first?
-- Which model, service, backend, or workflow should be the focus?
-- Should the guide prioritize training, inference, evaluation, API serving, data processing, or end-to-end operation?
-
-If the user chooses "default", use the primary documented path and summarize secondary paths.
 
 ## 4. Entrypoint Discovery
 
@@ -51,21 +57,47 @@ Look for:
 
 Label each entrypoint as confirmed, runtime verified, static inference, or unknown.
 
-## 5. Runtime Flow
+## 5. Engineer Fast-Start Checklist
 
-Trace:
+Use this when the selected mode is Engineer Fast-Start.
 
-- Startup command
-- First file reached
-- Config loading
-- Dependency initialization
-- Primary orchestration function
-- Core service/model/pipeline call
-- Output creation
+Capture:
 
-Prefer one main flow plus short notes for secondary flows.
+- Install command
+- Run command
+- Test command
+- Debug/log commands and locations
+- Required configs and environment variables
+- Primary entrypoint and high-level flow
+- Main data contracts and outputs
+- Common modification tasks and files
+- Risky files and hidden coupling
+- External service assumptions
+- Commands that were run and commands not run
 
-## 6. Data and Shape Trace
+Prefer concise tables and file references.
+
+## 6. Beginner Runtime Tutorial Checklist
+
+Use this when the selected mode is Beginner Runtime Tutorial.
+
+Trace code in execution order. For each step, capture:
+
+- Step number
+- Plain-language action
+- File and line number, or closest function/class when exact lines are not reliable
+- Code goal
+- Libraries/classes/functions/methods used
+- Input variable/data, source, shape/schema/type, and evidence
+- Operations performed
+- Output variable/data, destination, shape/schema/type, and evidence
+- State changes or side effects
+- Next code path
+- Beginner note
+
+This mode should feel like following a debugger. Avoid replacing the walkthrough with a module catalog.
+
+## 7. Data and Shape Trace
 
 For each important path, capture:
 
@@ -83,7 +115,7 @@ Use evidence labels:
 - Static inference
 - Unknown
 
-## 7. Shape Verification Opportunities
+## 8. Shape Verification Opportunities
 
 Safe checks include:
 
@@ -102,29 +134,17 @@ Avoid:
 - Large downloads
 - Secret-dependent checks without user approval
 
-## 8. Core Code Identification
+## 9. Line and Method Tracing
 
-Find:
+For Beginner Runtime Tutorial mode:
 
-- Orchestration modules
-- Core classes
-- Public APIs
-- Service classes
-- Model definitions
-- Dataset or parser code
-- Transform and validation code
-- Writers and response builders
-- Tests that describe expected behavior
+- Prefer exact line numbers from the current repository.
+- Cite function/class names when line numbers are unavailable.
+- Track external library calls used in the selected path.
+- Track local function calls in the order execution reaches them.
+- Note dynamic dispatch, plugin registries, reflection, callbacks, decorators, or framework magic as uncertainty when needed.
 
-Skip initially:
-
-- Generated code
-- Vendored dependencies
-- Build outputs
-- Cache directories
-- Low-level utilities unless they control the main flow
-
-## 9. Dependency Explanation
+## 10. Dependency Explanation
 
 For each major dependency, explain its role in this project:
 
@@ -137,35 +157,17 @@ For each major dependency, explain its role in this project:
 - UI library
 - Testing/debugging tool
 
-Do not turn this into a generic package encyclopedia.
-
-## 10. Reading Order
-
-Recommend a sequence:
-
-1. Short purpose doc or package metadata
-2. Startup script or entrypoint
-3. Config loading
-4. Main orchestration module
-5. Data loading and preprocessing
-6. Core model/service/pipeline
-7. Output/writer/response layer
-8. Tests that clarify behavior
-9. Supporting utilities
-
-Each step should say what the reader should understand before moving on.
+In Beginner Runtime Tutorial mode, emphasize dependencies actually used in the selected runtime path.
 
 ## 11. Final Review
 
 Before finishing the guide, check:
 
-- One clear project overview exists.
+- The selected mode is named near the top.
 - Startup and entrypoints are explained.
-- A practical reading order exists.
 - Data sources and outputs are traced.
 - Shape/schema claims have evidence labels.
-- Core modules are explained by responsibility.
-- Key loops or workflows are explained.
-- Dependencies are explained by project role.
+- Engineer Fast-Start mode includes run/test/debug/modify guidance.
+- Beginner Runtime Tutorial mode follows execution order with line references, libraries/methods, inputs, outputs, and next code path.
 - Unknowns are explicit.
 - No irrelevant personal local paths are included.

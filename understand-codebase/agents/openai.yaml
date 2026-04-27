@@ -1,4 +1,4 @@
 interface:
   display_name: "Understand Codebase"
-  short_description: "Generate a guided codebase overview"
-  default_prompt: "Understand this project and generate PROJECT_CODE_GUIDE.md."
+  short_description: "Generate fast-start or runtime tutorial guides"
+  default_prompt: "Understand this project and generate PROJECT_CODE_GUIDE.md. Ask which guide mode to use if unclear."

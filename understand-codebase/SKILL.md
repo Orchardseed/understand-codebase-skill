@@ -1,52 +1,117 @@
 ---
 name: understand-codebase
-description: Generate a single beginner-friendly but engineer-useful PROJECT_CODE_GUIDE.md for an unfamiliar codebase. Use when the user asks to understand a project, find entrypoints/config/core classes, explain module execution, trace data sources and outputs, inspect tensor shapes or data contracts, understand training/inference/API/CLI/data-processing flows, identify key loops or pipelines, or create a guided Markdown overview for learning code.
+description: Generate a single PROJECT_CODE_GUIDE.md for understanding an unfamiliar codebase, with selectable guide modes. Use Engineer Fast-Start mode when the user needs to run, test, debug, modify, or quickly onboard to a project. Use Beginner Runtime Tutorial mode when the user wants step-by-step learning through the actual execution path, including file lines, libraries/methods used, inputs, outputs, data shapes or schemas, and the next code path. Also use for finding entrypoints/config/core classes, tracing data sources and outputs, understanding training/inference/API/CLI/data-processing flows, identifying loops or pipelines, or creating a guided Markdown overview.
 ---
 
 # Understand Codebase
 
-Use this skill to turn an unfamiliar repository into one coherent learning guide: `PROJECT_CODE_GUIDE.md`.
+Use this skill to turn an unfamiliar repository into one coherent guide: `PROJECT_CODE_GUIDE.md`.
 
-Act like a code-reading tutor first and a handoff engineer second. Explain what the project does, how it runs, where data comes from, how data changes shape or schema, which files matter most, and what a newcomer should read in order.
+The skill supports two distinct guide modes. Do not blend them into a vague hybrid unless the user asks for both.
 
-## Output Contract
+## Clarify Before Writing
 
-Generate one Markdown file named `PROJECT_CODE_GUIDE.md` at the repository root unless the user requests another path.
+Clarify only what is needed. If the user's request already makes the answer clear, proceed.
 
-Default the guide language to English. If the user explicitly requests another language, use it. If the user writes in a non-English language but does not state the guide language, ask one short question before writing: "Should I write the guide in English or <detected language>?" If the user answers "default", use English.
+### 1. Language
 
-Use a beginner-friendly teaching style:
+Default the guide language to English.
 
-- Explain what each important component does.
-- Explain why it matters in this project.
-- Identify what to read first, next, later, and what to skip initially.
-- Add engineer quick anchors: key files, functions/classes, commands, configs, call chains, and modification risks.
+If the user explicitly requests another language, use it. If the user writes in a non-English language but does not state the guide language, ask one short question:
 
-## Workflow
+```text
+Should I write the guide in English or <detected language>?
+```
+
+If the user answers "default", use English.
+
+### 2. Guide Mode
+
+Infer the mode when possible:
+
+- Use **Engineer Fast-Start** when the user says quick start, onboard, handoff, run, test, debug, modify, fix, where to change, entrypoints, configs, or risks.
+- Use **Beginner Runtime Tutorial** when the user says learn, beginner, step-by-step, explain how code runs, follow execution, what happens next, input/output, shape, or "read code with me".
+
+If unclear, ask:
+
+```text
+Which guide style do you want?
+
+1. Engineer Fast-Start: quick handoff for running, testing, debugging, and modifying code.
+2. Beginner Runtime Tutorial: step-by-step execution walkthrough with file lines, libraries/methods, inputs, outputs, and next code path.
+3. Both: engineer summary first, then beginner runtime walkthrough.
+```
+
+If the user answers "default", choose Beginner Runtime Tutorial for learning-oriented requests and Engineer Fast-Start for maintenance-oriented requests.
+
+### 3. Specific Flow
+
+For composite projects with multiple entrypoints, models, services, or workflows, ask one focused question at a time:
+
+- Which input data should be traced first?
+- Which model, backend, service, or workflow should be the main focus?
+- Should the guide prioritize training, inference, evaluation, API serving, data processing, or end-to-end operation?
+
+If the user answers "default", follow the primary documented end-to-end path and briefly summarize secondary flows.
+
+## Engineer Fast-Start Mode
+
+Use this mode for experienced engineers who need to operate or modify the project quickly.
+
+Prioritize:
+
+- How to install, configure, run, and test the project
+- Entrypoints and startup commands
+- Required environment variables and configs
+- Core runtime flow at a high level
+- Main data contracts and output destinations
+- Key files to modify for common tasks
+- Debugging/logging locations
+- Risky files, hidden coupling, external services, and shape/schema assumptions
+
+Avoid long teaching explanations. Prefer concise tables, command blocks, file references, and practical notes.
+
+## Beginner Runtime Tutorial Mode
+
+Use this mode for learning how the code actually executes.
+
+This mode is not a module catalog. Do not mainly list "what each file does." Instead, write a runtime walkthrough in the order code runs.
+
+For each step, include:
+
+- Step number and plain-language action
+- File and line reference when available
+- Code goal: what this code is trying to accomplish
+- Libraries, classes, functions, and methods used at that step
+- Input data, including shape/schema/type when knowable
+- Output data, including shape/schema/type when knowable
+- State changes, side effects, files written, network calls, database writes, or model calls
+- Next code path: where execution goes next
+- Evidence label: Confirmed, Runtime verified, Static inference, or Unknown
+- Beginner note: the concept a newcomer should understand before continuing
+
+Use line numbers from the repository when possible. If exact line numbers are unstable or dynamic dispatch hides the path, say so and cite the closest function/class/file evidence.
+
+## General Workflow
 
 1. Inspect top-level context: README, package metadata, dependency files, config files, scripts, Docker files, notebooks, source directories, and tests.
-2. Identify the project type: backend, frontend, CLI, library, ML training, ML inference, data pipeline, worker system, desktop/mobile app, or mixed system.
-3. If the project has multiple major flows and the user's target is ambiguous, ask one focused question at a time:
-   - Which input data should be traced first?
-   - Which model, backend, service, or workflow should be the main focus?
-   - Should the guide prioritize training, inference, evaluation, API serving, data processing, or end-to-end operation?
-4. If the user says "default" or has no preference, follow the primary documented end-to-end path and briefly summarize secondary flows.
-5. Find entrypoints from docs, package scripts, Makefiles, Dockerfiles, main blocks, route registration, CLI definitions, notebooks, or framework conventions.
-6. Map directories by importance rather than listing every file.
-7. Trace the core runtime flow from entrypoint to output.
-8. Trace data sources, transformations, schemas, tensor shapes, and destinations.
-9. Identify core modules, classes, functions, loops, pipelines, services, and workflows.
-10. Explain major dependencies by their role in this project.
-11. Identify tests, debug commands, logs, and safe validation paths.
-12. Write `PROJECT_CODE_GUIDE.md`.
-13. Clearly label confirmed facts, runtime-verified facts, static inferences, and unknowns.
+2. Identify project type: backend, frontend, CLI, library, ML training, ML inference, data pipeline, worker system, desktop/mobile app, or mixed system.
+3. Resolve language, guide mode, and specific flow using the clarification rules above.
+4. Find entrypoints from docs, package scripts, Makefiles, Dockerfiles, main blocks, route registration, CLI definitions, notebooks, or framework conventions.
+5. Trace the selected runtime flow from entrypoint to output.
+6. Trace data sources, transformations, schemas, tensor shapes, and destinations.
+7. Identify core modules, classes, functions, loops, pipelines, services, and workflows relevant to the selected mode.
+8. Explain major dependencies by their role in the selected flow.
+9. Identify tests, debug commands, logs, and safe validation paths.
+10. Write one `PROJECT_CODE_GUIDE.md` using the matching template.
+11. Clearly label confirmed facts, runtime-verified facts, static inferences, and unknowns.
 
 ## Reference Files
 
-Load these references only when needed:
+Load these references when needed:
 
-- `references/project-guide-template.md`: Use as the output structure for `PROJECT_CODE_GUIDE.md`.
-- `references/analysis-checklist.md`: Use as the inspection checklist while reading a repository.
+- `references/project-guide-template.md`: Mode-specific output structures for `PROJECT_CODE_GUIDE.md`.
+- `references/analysis-checklist.md`: Mode-specific inspection checklist.
 
 ## Data and Shape Tracking
 
@@ -107,23 +172,15 @@ Avoid unsafe execution unless the user explicitly approves:
 
 If runtime verification is not possible, rely on static analysis and label the result as static inference or unknown.
 
-## Writing Rules
+## Final Review
 
-Use the template reference unless the project clearly needs a small adaptation.
+Before finishing `PROJECT_CODE_GUIDE.md`, check:
 
-Keep the guide practical:
-
-- Prefer important files over exhaustive lists.
-- Include Mermaid diagrams only when they make flow easier to understand.
-- Explain library roles in this project, not generic package descriptions.
-- Mark generated, vendored, build, and cache files as "skip initially" unless central.
-- Include modification risks where changing a file could affect many paths.
-
-Before finishing, scan `PROJECT_CODE_GUIDE.md` for:
-
-- Missing entrypoint or startup explanation
-- Missing data source and output explanation
-- Unlabeled guesses
-- Overly long file dumps
-- Missing recommended reading order
-- Personal local paths or machine-specific details that do not belong in the analyzed project
+- The selected mode is stated near the top.
+- Language choice matches the user request or clarification answer.
+- Composite-flow choice is stated if the project has multiple major flows.
+- Data source, input, output, and shape/schema claims have evidence labels.
+- Engineer mode includes commands, tests, modification points, and risks.
+- Beginner mode follows actual execution order and includes file lines, libraries/methods, inputs, outputs, and next code path.
+- Unknowns are explicit.
+- No irrelevant personal local paths or machine-specific details are included.

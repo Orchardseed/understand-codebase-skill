@@ -1,9 +1,9 @@
 ---
-description: Generate a guided PROJECT_CODE_GUIDE.md for understanding unfamiliar codebases
+description: Generate PROJECT_CODE_GUIDE.md in Engineer Fast-Start or Beginner Runtime Tutorial mode
 alwaysApply: false
 ---
 
-Use this rule when the user asks to understand a repository, find entrypoints/config/core classes, trace data sources and outputs, inspect tensor shapes or data contracts, understand training/inference/API/CLI/data-processing flows, identify key loops or pipelines, or generate a guided project overview.
+Use this rule when the user asks to understand a repository, quickly onboard, run/test/debug/modify code, trace data sources and outputs, inspect tensor shapes or data contracts, understand training/inference/API/CLI/data-processing flows, identify key loops or pipelines, or generate a guided project overview.
 
 Generate one file at the repository root unless the user requests another path:
 
@@ -13,6 +13,22 @@ PROJECT_CODE_GUIDE.md
 
 Default to English. If the user explicitly requests another language, use it. If the user writes in a non-English language but does not state the guide language, ask whether to write the guide in English or that language. If the user says "default", use English.
 
+Select a guide mode:
+
+- Engineer Fast-Start: for quick handoff, running, testing, debugging, modifying, entrypoints, configs, and risks.
+- Beginner Runtime Tutorial: for step-by-step learning through actual execution, with file lines, libraries/methods, inputs, outputs, shape/schema, and next code path.
+- Both: concise engineer summary first, detailed runtime tutorial second.
+
+Infer the mode when obvious. If unclear, ask:
+
+```text
+Which guide style do you want?
+
+1. Engineer Fast-Start: quick handoff for running, testing, debugging, and modifying code.
+2. Beginner Runtime Tutorial: step-by-step execution walkthrough with file lines, libraries/methods, inputs, outputs, and next code path.
+3. Both: engineer summary first, then beginner runtime walkthrough.
+```
+
 If the repository is composite and the target path is ambiguous, ask one focused question at a time:
 
 - Which input data should be traced first?
@@ -21,27 +37,26 @@ If the repository is composite and the target path is ambiguous, ask one focused
 
 If the user chooses "default", follow the primary documented end-to-end flow and briefly summarize secondary flows.
 
-The guide must include:
+Engineer Fast-Start must include:
 
-- Project overview
-- Quick start, entrypoints, and runtime commands
-- Directory map
-- Recommended reading order
-- Core runtime flow
-- Data sources, data flow, and shape/schema tracking
-- Core modules, classes, and functions
-- Key loops, pipelines, and workflows
-- Configuration, environment variables, and parameters
-- Main dependencies and their roles
-- Testing, debugging, and logging
-- Notes for future code changes
-- Unknowns and items that need runtime verification
+- Install/run/test/debug commands
+- Entrypoints and high-level runtime flow
+- Configs and environment variables
+- Data contracts and outputs
+- Files to modify for common tasks
+- Risks and unknowns
 
-Track "shape" broadly as a data contract:
+Beginner Runtime Tutorial must include step blocks with:
 
-- Tensors such as `[B, C, H, W]`, `[B, T]`, `[B, T, D]`
-- Image layouts such as `[H, W, C]` and `[C, H, W]`
-- JSON bodies, table schemas, DTOs, ORM rows, CLI args, queue payloads, webhook payloads, and config structures
+- File and line reference
+- Code goal
+- Libraries/classes/functions/methods used
+- Input shape/schema/type
+- What happens
+- Output shape/schema/type
+- Next code path
+- Evidence label
+- Beginner note
 
 Use evidence labels:
 
