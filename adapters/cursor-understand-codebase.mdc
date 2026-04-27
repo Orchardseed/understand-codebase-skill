@@ -1,0 +1,53 @@
+---
+description: Generate a guided PROJECT_CODE_GUIDE.md for understanding unfamiliar codebases
+alwaysApply: false
+---
+
+Use this rule when the user asks to understand a repository, find entrypoints/config/core classes, trace data sources and outputs, inspect tensor shapes or data contracts, understand training/inference/API/CLI/data-processing flows, identify key loops or pipelines, or generate a guided project overview.
+
+Generate one file at the repository root unless the user requests another path:
+
+```text
+PROJECT_CODE_GUIDE.md
+```
+
+Default to English. If the user explicitly requests another language, use it. If the user writes in a non-English language but does not state the guide language, ask whether to write the guide in English or that language. If the user says "default", use English.
+
+If the repository is composite and the target path is ambiguous, ask one focused question at a time:
+
+- Which input data should be traced first?
+- Which model, backend, service, or workflow should be the focus?
+- Should the guide prioritize training, inference, evaluation, API serving, data processing, or end-to-end operation?
+
+If the user chooses "default", follow the primary documented end-to-end flow and briefly summarize secondary flows.
+
+The guide must include:
+
+- Project overview
+- Quick start, entrypoints, and runtime commands
+- Directory map
+- Recommended reading order
+- Core runtime flow
+- Data sources, data flow, and shape/schema tracking
+- Core modules, classes, and functions
+- Key loops, pipelines, and workflows
+- Configuration, environment variables, and parameters
+- Main dependencies and their roles
+- Testing, debugging, and logging
+- Notes for future code changes
+- Unknowns and items that need runtime verification
+
+Track "shape" broadly as a data contract:
+
+- Tensors such as `[B, C, H, W]`, `[B, T]`, `[B, T, D]`
+- Image layouts such as `[H, W, C]` and `[C, H, W]`
+- JSON bodies, table schemas, DTOs, ORM rows, CLI args, queue payloads, webhook payloads, and config structures
+
+Use evidence labels:
+
+- Confirmed: explicitly shown by code, docs, schemas, tests, comments, or config
+- Runtime verified: checked by a safe command, test, dry run, CLI help, route listing, or minimal sample
+- Static inference: inferred from conventions, signatures, model structure, or surrounding code
+- Unknown: cannot be determined from available code and safe checks
+
+Run only safe, low-risk verification commands. Do not run destructive commands, long training jobs, production writes, external mutations, large downloads, or secret-dependent commands without explicit user approval.

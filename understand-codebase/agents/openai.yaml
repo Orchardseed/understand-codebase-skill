@@ -1,0 +1,4 @@
+interface:
+  display_name: "Understand Codebase"
+  short_description: "Generate a guided codebase overview"
+  default_prompt: "Understand this project and generate PROJECT_CODE_GUIDE.md."
