@@ -128,14 +128,14 @@ Explain only the components an engineer needs to modify or debug:
 - Needs runtime verification:
 ```
 
-## Template B: Beginner Runtime Tutorial
+## Template B: Beginner Full Runtime Code Walkthrough
 
-Use this for step-by-step learning through actual execution. This mode should read like following the program in a debugger.
+Use this for a very detailed new-learner guide through actual execution. This mode should read like following the program in a debugger while also explaining what each important line or line range accomplishes.
 
 ```markdown
 # Project Code Guide
 
-Guide mode: Beginner Runtime Tutorial
+Guide mode: Beginner Full Runtime Code Walkthrough
 
 ## Evidence Legend
 
@@ -171,24 +171,32 @@ Explain setup that affects execution:
 - External files/data:
 - Dependencies/libraries that matter in this path:
 
-## 4. Step-by-Step Runtime Walkthrough
+## 4. Full Runtime Code Walkthrough
 
-Repeat this block for each meaningful execution step.
+Repeat this block for each meaningful execution step. Each step must be tied to exact lines or tight line ranges when possible.
 
 ### Step N: <plain-language action>
 
-Location:
+Code location:
 
 - `<file>:<line>` or `<file>:<start-line>-<end-line>`
 
+Lines explained:
+
+| Lines | Code | What this code accomplishes |
+| --- | --- | --- |
+| `<file>:<line>` | `<short code excerpt or symbol>` | Explains the concrete work done here |
+| `<file>:<start-line>-<end-line>` | `<short code excerpt or symbol>` | Explains the concrete work done by this block |
+
 Code goal:
 
-- Explain what this code is trying to accomplish.
+- Explain the exact goal these lines complete in the runtime path.
 
 Libraries, classes, and methods used:
 
 - `<library_or_module>.<method>()`: what it does here
 - `<local_function>()`: why this project calls it
+- `<local_class.method>()`: what object state or output it produces
 
 Input:
 
@@ -196,38 +204,49 @@ Input:
 - Source:
 - Shape/schema/type:
 - Example value or keys:
+- Passed into:
 - Evidence:
 
 What happens:
 
-1. First operation
-2. Next operation
-3. Important branch, loop, transform, validation, model call, or side effect
+1. Explain the first executed line or tight line range.
+2. Explain the next executed line or tight line range.
+3. Explain important branches, loops, transforms, validations, model calls, or side effects.
+4. Explain what values are passed into the next function/method call.
 
 Output:
 
 - Name:
 - Shape/schema/type:
 - Destination:
+- Returned from:
 - Evidence:
 
 Next code path:
 
 - Goes to `<file>:<line>` / `<function>` because ...
+- If a function returns, state which caller line resumes next.
 
 Beginner note:
 
 - Explain the one concept the reader should understand before continuing.
+
+### Step N+1: <next executed action>
+
+Use another full step block. Do not skip important calls simply because they are in a different file.
 
 ## 5. Important Loops and Branches
 
 For each important loop/branch:
 
 - Location:
+- Lines explained:
 - Why it repeats or branches:
 - Input per iteration:
 - Output per iteration:
+- State changed per iteration:
 - Stop condition:
+- Next code path after the loop/branch:
 - Evidence:
 
 ## 6. Data and Shape Timeline
@@ -246,12 +265,12 @@ Examples:
 - Hidden states: `[B, T, D]`
 - HTTP body: `{ user_id, items[], created_at }`
 
-## 7. Libraries and Methods Used in This Runtime Path
+## 7. Libraries, Classes, Functions, and Methods Used in This Runtime Path
 
-Explain only libraries/methods actually used in the walkthrough:
+Explain only libraries/classes/functions/methods actually used in the walkthrough:
 
-| Library/Method | Step | What it does here | Beginner explanation |
-| --- | --- | --- | --- |
+| Symbol | Type | Step | Lines | What it does here | Input | Output | Beginner explanation |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 
 ## 8. Where to Read Next
 
@@ -271,6 +290,7 @@ List:
 - Unverified shapes
 - Commands not run
 - External services or credentials needed
+- Any important code path that could not be followed to exact lines
 ```
 
 ## Template C: Both
@@ -278,6 +298,6 @@ List:
 If the user asks for both, write:
 
 1. A concise Engineer Fast-Start section first.
-2. A Beginner Runtime Tutorial section second.
+2. A Beginner Full Runtime Code Walkthrough section second.
 
 Keep the fast-start section short. Put detailed line-by-line explanation in the tutorial section.

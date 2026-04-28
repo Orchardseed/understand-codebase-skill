@@ -9,7 +9,7 @@ Resolve these before writing:
 - Language: English by default, or user-requested language.
 - Guide mode:
   - Engineer Fast-Start
-  - Beginner Runtime Tutorial
+  - Beginner Full Runtime Code Walkthrough
   - Both
 - Composite flow focus:
   - Input data to trace
@@ -77,25 +77,27 @@ Capture:
 
 Prefer concise tables and file references.
 
-## 6. Beginner Runtime Tutorial Checklist
+## 6. Beginner Full Runtime Code Walkthrough Checklist
 
-Use this when the selected mode is Beginner Runtime Tutorial.
+Use this when the selected mode is Beginner Full Runtime Code Walkthrough.
 
 Trace code in execution order. For each step, capture:
 
 - Step number
 - Plain-language action
-- File and line number, or closest function/class when exact lines are not reliable
-- Code goal
+- File and exact line number or tight line range, or closest function/class when exact lines are not reliable
+- Lines explained, with one explanation per important line or tight line range
+- Code goal completed by those exact lines
 - Libraries/classes/functions/methods used
 - Input variable/data, source, shape/schema/type, and evidence
-- Operations performed
+- Operations performed by each line or line range
 - Output variable/data, destination, shape/schema/type, and evidence
 - State changes or side effects
-- Next code path
+- Next code path, including file/line/function reached next
+- Caller/callee relationship for important local calls
 - Beginner note
 
-This mode should feel like following a debugger. Avoid replacing the walkthrough with a module catalog.
+This mode should feel like following a debugger plus a teacher explaining each important line. Avoid replacing the walkthrough with a module catalog, file inventory, or responsibility list.
 
 ## 7. Data and Shape Trace
 
@@ -136,12 +138,14 @@ Avoid:
 
 ## 9. Line and Method Tracing
 
-For Beginner Runtime Tutorial mode:
+For Beginner Full Runtime Code Walkthrough mode:
 
 - Prefer exact line numbers from the current repository.
-- Cite function/class names when line numbers are unavailable.
+- Use tight line ranges when one line alone does not explain a complete action.
+- Cite function/class names when line numbers are unavailable, and mark the evidence as Unknown or Static inference.
 - Track external library calls used in the selected path.
 - Track local function calls in the order execution reaches them.
+- For each important call, record caller line, callee function/class/method, input arguments, return value, and where execution resumes.
 - Note dynamic dispatch, plugin registries, reflection, callbacks, decorators, or framework magic as uncertainty when needed.
 
 ## 10. Dependency Explanation
@@ -157,7 +161,7 @@ For each major dependency, explain its role in this project:
 - UI library
 - Testing/debugging tool
 
-In Beginner Runtime Tutorial mode, emphasize dependencies actually used in the selected runtime path.
+In Beginner Full Runtime Code Walkthrough mode, emphasize dependencies actually used in the selected runtime path.
 
 ## 11. Final Review
 
@@ -168,6 +172,6 @@ Before finishing the guide, check:
 - Data sources and outputs are traced.
 - Shape/schema claims have evidence labels.
 - Engineer Fast-Start mode includes run/test/debug/modify guidance.
-- Beginner Runtime Tutorial mode follows execution order with line references, libraries/methods, inputs, outputs, and next code path.
+- Beginner Full Runtime Code Walkthrough mode follows execution order with exact lines or tight line ranges, line-level explanations, libraries/methods, inputs, outputs, caller/callee transitions, and next code path.
 - Unknowns are explicit.
 - No irrelevant personal local paths are included.

@@ -1,6 +1,6 @@
 ---
 name: understand-codebase
-description: Generate a single PROJECT_CODE_GUIDE.md for understanding an unfamiliar codebase, with selectable guide modes. Use Engineer Fast-Start mode when the user needs to run, test, debug, modify, or quickly onboard to a project. Use Beginner Runtime Tutorial mode when the user wants step-by-step learning through the actual execution path, including file lines, libraries/methods used, inputs, outputs, data shapes or schemas, and the next code path. Also use for finding entrypoints/config/core classes, tracing data sources and outputs, understanding training/inference/API/CLI/data-processing flows, identifying loops or pipelines, or creating a guided Markdown overview.
+description: Generate a single PROJECT_CODE_GUIDE.md for understanding an unfamiliar codebase, with selectable guide modes. Use Engineer Fast-Start mode when the user needs to run, test, debug, modify, or quickly onboard to a project. Use Beginner Full Runtime Code Walkthrough mode when the user wants a very detailed learning guide that follows the actual execution path line by line or line-range by line-range, explaining which code completes what goal, which libraries/classes/functions/methods are used, inputs, outputs, data shapes or schemas, and the next code path. Also use for finding entrypoints/config/core classes, tracing data sources and outputs, understanding training/inference/API/CLI/data-processing flows, identifying loops or pipelines, or creating a guided Markdown overview.
 ---
 
 # Understand Codebase
@@ -30,7 +30,7 @@ If the user answers "default", use English.
 Infer the mode when possible:
 
 - Use **Engineer Fast-Start** when the user says quick start, onboard, handoff, run, test, debug, modify, fix, where to change, entrypoints, configs, or risks.
-- Use **Beginner Runtime Tutorial** when the user says learn, beginner, step-by-step, explain how code runs, follow execution, what happens next, input/output, shape, or "read code with me".
+- Use **Beginner Full Runtime Code Walkthrough** when the user says learn, beginner, full flow, detailed, line by line, step-by-step, explain how code runs, follow execution, what happens next, input/output, shape, or "read code with me".
 
 If unclear, ask:
 
@@ -38,11 +38,11 @@ If unclear, ask:
 Which guide style do you want?
 
 1. Engineer Fast-Start: quick handoff for running, testing, debugging, and modifying code.
-2. Beginner Runtime Tutorial: step-by-step execution walkthrough with file lines, libraries/methods, inputs, outputs, and next code path.
+2. Beginner Full Runtime Code Walkthrough: full-flow learning guide with exact lines or line ranges, code goals, libraries/methods, inputs, outputs, and next code path.
 3. Both: engineer summary first, then beginner runtime walkthrough.
 ```
 
-If the user answers "default", choose Beginner Runtime Tutorial for learning-oriented requests and Engineer Fast-Start for maintenance-oriented requests.
+If the user answers "default", choose Beginner Full Runtime Code Walkthrough for learning-oriented requests and Engineer Fast-Start for maintenance-oriented requests.
 
 ### 3. Specific Flow
 
@@ -71,18 +71,19 @@ Prioritize:
 
 Avoid long teaching explanations. Prefer concise tables, command blocks, file references, and practical notes.
 
-## Beginner Runtime Tutorial Mode
+## Beginner Full Runtime Code Walkthrough Mode
 
-Use this mode for learning how the code actually executes.
+Use this mode for learning how the code actually executes in detail.
 
-This mode is not a module catalog. Do not mainly list "what each file does." Instead, write a runtime walkthrough in the order code runs.
+This mode is not a module catalog. Do not mainly list "what each file does" or "what each module is responsible for." Instead, write a full runtime code walkthrough in the order code runs.
 
-For each step, include:
+For each walkthrough step, include:
 
 - Step number and plain-language action
-- File and line reference when available
-- Code goal: what this code is trying to accomplish
-- Libraries, classes, functions, and methods used at that step
+- File and exact line or line-range reference when available
+- Lines explained: break the step into line-level or small line-range explanations
+- Code goal: what these lines are trying to accomplish
+- Libraries, classes, functions, and methods used by these lines
 - Input data, including shape/schema/type when knowable
 - Output data, including shape/schema/type when knowable
 - State changes, side effects, files written, network calls, database writes, or model calls
@@ -90,7 +91,17 @@ For each step, include:
 - Evidence label: Confirmed, Runtime verified, Static inference, or Unknown
 - Beginner note: the concept a newcomer should understand before continuing
 
-Use line numbers from the repository when possible. If exact line numbers are unstable or dynamic dispatch hides the path, say so and cite the closest function/class/file evidence.
+Use line numbers from the repository whenever possible. If exact line numbers are unstable or dynamic dispatch hides the path, say so and cite the closest function/class/file evidence.
+
+For every important call, explain both sides:
+
+- The caller line: why this code calls the function/class/method.
+- The callee line or function: what code runs next.
+- The input passed into the call.
+- The output returned by the call.
+- The next line or file reached after the call returns.
+
+If a file is important but not reached in the selected runtime path, mention it only in "Where to read next"; do not turn the walkthrough into a file inventory.
 
 ## General Workflow
 
@@ -181,6 +192,6 @@ Before finishing `PROJECT_CODE_GUIDE.md`, check:
 - Composite-flow choice is stated if the project has multiple major flows.
 - Data source, input, output, and shape/schema claims have evidence labels.
 - Engineer mode includes commands, tests, modification points, and risks.
-- Beginner mode follows actual execution order and includes file lines, libraries/methods, inputs, outputs, and next code path.
+- Beginner Full Runtime Code Walkthrough mode follows actual execution order and includes exact lines or line ranges, line-level explanations, libraries/methods, inputs, outputs, and next code path.
 - Unknowns are explicit.
 - No irrelevant personal local paths or machine-specific details are included.

@@ -5,7 +5,7 @@
 The skill now supports two guide modes:
 
 - **Engineer Fast-Start:** for engineers who need to run, test, debug, modify, or quickly onboard to a project.
-- **Beginner Runtime Tutorial:** for learners who want to follow the actual execution path step by step, including file lines, libraries/methods, inputs, outputs, shape/schema, and the next code path.
+- **Beginner Full Runtime Code Walkthrough:** for learners who want a full-flow, line-level explanation of the actual execution path, including exact lines or line ranges, code goals, libraries/methods, inputs, outputs, shape/schema, and the next code path.
 
 The guide defaults to English. If the user requests another language, or appears to prefer another language, the agent should ask whether to keep English or switch.
 
@@ -87,10 +87,10 @@ Engineer Fast-Start:
 Use understand-codebase to create an engineer fast-start guide so I can run tests and modify this project.
 ```
 
-Beginner Runtime Tutorial:
+Beginner Full Runtime Code Walkthrough:
 
 ```text
-Use understand-codebase to create a beginner runtime tutorial. Walk through the actual code execution with line numbers, libraries, inputs, outputs, and next code path.
+Use understand-codebase to create a beginner full runtime code walkthrough. Explain the actual execution path line by line or line-range by line-range, including code goals, libraries/methods, inputs, outputs, and next code path.
 ```
 
 Composite project with default path:

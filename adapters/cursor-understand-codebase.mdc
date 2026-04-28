@@ -1,5 +1,5 @@
 ---
-description: Generate PROJECT_CODE_GUIDE.md in Engineer Fast-Start or Beginner Runtime Tutorial mode
+description: Generate PROJECT_CODE_GUIDE.md in Engineer Fast-Start or Beginner Full Runtime Code Walkthrough mode
 alwaysApply: false
 ---
 
@@ -16,7 +16,7 @@ Default to English. If the user explicitly requests another language, use it. If
 Select a guide mode:
 
 - Engineer Fast-Start: for quick handoff, running, testing, debugging, modifying, entrypoints, configs, and risks.
-- Beginner Runtime Tutorial: for step-by-step learning through actual execution, with file lines, libraries/methods, inputs, outputs, shape/schema, and next code path.
+- Beginner Full Runtime Code Walkthrough: for detailed new-learner study through actual execution, with exact lines or line ranges, code goals, libraries/methods, inputs, outputs, shape/schema, caller/callee transitions, and next code path.
 - Both: concise engineer summary first, detailed runtime tutorial second.
 
 Infer the mode when obvious. If unclear, ask:
@@ -25,7 +25,7 @@ Infer the mode when obvious. If unclear, ask:
 Which guide style do you want?
 
 1. Engineer Fast-Start: quick handoff for running, testing, debugging, and modifying code.
-2. Beginner Runtime Tutorial: step-by-step execution walkthrough with file lines, libraries/methods, inputs, outputs, and next code path.
+2. Beginner Full Runtime Code Walkthrough: full-flow learning guide with exact lines or line ranges, code goals, libraries/methods, inputs, outputs, and next code path.
 3. Both: engineer summary first, then beginner runtime walkthrough.
 ```
 
@@ -46,17 +46,21 @@ Engineer Fast-Start must include:
 - Files to modify for common tasks
 - Risks and unknowns
 
-Beginner Runtime Tutorial must include step blocks with:
+Beginner Full Runtime Code Walkthrough must include step blocks with:
 
-- File and line reference
-- Code goal
+- File and exact line or tight line-range reference
+- Lines explained, with one explanation per important line or tight line range
+- Code goal completed by those exact lines
 - Libraries/classes/functions/methods used
 - Input shape/schema/type
 - What happens
 - Output shape/schema/type
+- Caller/callee transition for important local calls
 - Next code path
 - Evidence label
 - Beginner note
+
+Do not replace this mode with a module catalog or file responsibility list.
 
 Use evidence labels:
 

@@ -34,18 +34,20 @@ Include:
 - Risky files and hidden coupling
 - Unknowns and checks not run
 
-### Beginner Runtime Tutorial
+### Beginner Full Runtime Code Walkthrough
 
-Use for learning how the code actually executes.
+Use for learning how the code actually executes in full detail.
 
-Do not write a module catalog. Follow the runtime path like a debugger. For each step include:
+Do not write a module catalog or file responsibility list. Follow the runtime path like a debugger and explain the important lines like a teacher. For each step include:
 
-- File and line reference
-- Code goal
+- File and exact line or tight line-range reference
+- Lines explained, with one explanation per important line or tight line range
+- Code goal completed by those exact lines
 - Libraries/classes/functions/methods used
 - Input source, shape/schema/type, and evidence
 - What happens
 - Output destination, shape/schema/type, and evidence
+- Caller/callee relationship for important local calls
 - Next code path
 - Beginner note
 
@@ -61,7 +63,7 @@ Infer the mode when obvious. If unclear, ask:
 Which guide style do you want?
 
 1. Engineer Fast-Start: quick handoff for running, testing, debugging, and modifying code.
-2. Beginner Runtime Tutorial: step-by-step execution walkthrough with file lines, libraries/methods, inputs, outputs, and next code path.
+2. Beginner Full Runtime Code Walkthrough: full-flow learning guide with exact lines or line ranges, code goals, libraries/methods, inputs, outputs, and next code path.
 3. Both: engineer summary first, then beginner runtime walkthrough.
 ```
 
