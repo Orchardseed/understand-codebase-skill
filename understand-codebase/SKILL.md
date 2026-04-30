@@ -9,6 +9,18 @@ Use this skill to turn an unfamiliar repository into one coherent guide: `PROJEC
 
 The skill supports two distinct guide modes. Do not blend them into a vague hybrid unless the user asks for both.
 
+## PLAN-Style Workflow Map
+
+Before writing detailed sections, build a workflow map similar to a project implementation plan:
+
+1. State the overall goal and expected behavior.
+2. Identify the user-facing commands, config files, inputs, weights/models/services, outputs, and validation checks.
+3. Summarize the workflow as stages, with each stage describing what is consumed, what work is done, what is produced, and what can fail.
+4. Record explicit conventions, such as preferred CLI names, config override order, output file naming, and assumptions about GPU/process/model behavior.
+5. Use this workflow map as the backbone for both guide modes.
+
+This workflow map is especially important for learning-oriented guides because it tells the reader what the code is trying to achieve before the line-level walkthrough begins.
+
 ## Clarify Before Writing
 
 Clarify only what is needed. If the user's request already makes the answer clear, proceed.
@@ -60,13 +72,19 @@ Use this mode for experienced engineers who need to operate or modify the projec
 
 Prioritize:
 
+- Overall goal and expected behavior contract
 - How to install, configure, run, and test the project
 - Entrypoints and startup commands
+- CLI/config override rules and important defaults
 - Required environment variables and configs
 - Core runtime flow at a high level
 - Main data contracts and output destinations
+- Output file schemas, naming rules, and overwrite behavior
+- Input validation and likely error messages
 - Key files to modify for common tasks
 - Debugging/logging locations
+- Acceptance tests and smoke commands
+- Explicit project conventions and invariants
 - Risky files, hidden coupling, external services, and shape/schema assumptions
 
 Avoid long teaching explanations. Prefer concise tables, command blocks, file references, and practical notes.
@@ -76,6 +94,15 @@ Avoid long teaching explanations. Prefer concise tables, command blocks, file re
 Use this mode for learning how the code actually executes in detail.
 
 This mode is not a module catalog. Do not mainly list "what each file does" or "what each module is responsible for." Instead, write a full runtime code walkthrough in the order code runs.
+
+Start with a PLAN-style workflow map before the line-level walkthrough:
+
+- Overall goal: what the selected command/workflow is supposed to accomplish.
+- Inputs and contracts: CLI args, config fields, files, datasets, models, weights, services, or request payloads.
+- Runtime stages: a compact stage table from start command to final output.
+- Output contracts: generated files, response schemas, metrics, logs, checkpoints, or UI state.
+- Validation/error contracts: what inputs are rejected and where errors should appear.
+- Explicit conventions: names, override order, folder layout, GPU/process rules, or other assumptions.
 
 For each walkthrough step, include:
 
@@ -190,8 +217,9 @@ Before finishing `PROJECT_CODE_GUIDE.md`, check:
 - The selected mode is stated near the top.
 - Language choice matches the user request or clarification answer.
 - Composite-flow choice is stated if the project has multiple major flows.
+- A PLAN-style workflow map appears before detailed mode-specific analysis.
 - Data source, input, output, and shape/schema claims have evidence labels.
 - Engineer mode includes commands, tests, modification points, and risks.
-- Beginner Full Runtime Code Walkthrough mode follows actual execution order and includes exact lines or line ranges, line-level explanations, libraries/methods, inputs, outputs, and next code path.
+- Beginner Full Runtime Code Walkthrough mode includes workflow contracts first, then follows actual execution order with exact lines or line ranges, line-level explanations, libraries/methods, inputs, outputs, and next code path.
 - Unknowns are explicit.
 - No irrelevant personal local paths or machine-specific details are included.

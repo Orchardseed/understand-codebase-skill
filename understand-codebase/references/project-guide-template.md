@@ -31,16 +31,43 @@ Guide mode: Engineer Fast-Start
 - Static inference:
 - Unknown:
 
-## 1. Project Snapshot
+## 1. Goal and Behavior Contract
 
-- Purpose:
+- Overall goal:
+- Expected behavior after running the main workflow:
+- What this guide helps an engineer do:
+- Primary success criteria:
+- Out of scope or intentionally unsupported behavior:
+
+| Goal | Expected behavior | Evidence |
+| --- | --- | --- |
+
+## 2. Project Snapshot
+
 - Project type:
 - Main language/framework:
 - Primary entrypoint:
 - Primary output:
 - Most important directories:
 
-## 2. Runbook
+## 3. Command, Config, and Input Contracts
+
+### Commands
+
+| Command/Argument | Role | Default | Override behavior | Evidence |
+| --- | --- | --- | --- | --- |
+
+### Config
+
+| Field | Role | Example/default | Used by | Evidence |
+| --- | --- | --- | --- | --- |
+
+### Inputs
+
+| Input | Required shape/schema/type | Validation rule | Failure behavior | Evidence |
+| --- | --- | --- | --- | --- |
+
+## 4. Runbook
 
 ### Install
 
@@ -67,7 +94,14 @@ Guide mode: Engineer Fast-Start
 - Log location:
 - Common failure points:
 
-## 3. Entrypoints and Runtime Flow
+## 5. Workflow Stage Map
+
+Summarize the workflow as a stage table before diving into files:
+
+| Stage | Consumes | Does | Produces | Failure cases | Evidence |
+| --- | --- | --- | --- | --- | --- |
+
+## 6. Entrypoints and Runtime Flow
 
 Summarize the main path:
 
@@ -79,26 +113,26 @@ Summarize the main path:
 
 Add a Mermaid flowchart when it improves scanning.
 
-## 4. Configuration and Environment
+## 7. Output Contracts
 
-List required and important configs:
+Explain generated files, responses, logs, checkpoints, metrics, or UI state:
 
-| Name | Source | Used by | Effect | Evidence |
+| Output | Location/name | Schema/content | Naming/overwrite rule | Evidence |
 | --- | --- | --- | --- | --- |
 
-## 5. Data Contracts and Shape Summary
+## 8. Data Contracts and Shape Summary
 
 Summarize key inputs and outputs:
 
 | Data | Source | Shape/Schema/Type | Destination | Evidence |
 | --- | --- | --- | --- | --- |
 
-## 6. Key Files for Modification
+## 9. Key Files for Modification
 
 | Task | File(s) | What to change | Risk | Evidence |
 | --- | --- | --- | --- | --- |
 
-## 7. Core Components
+## 10. Core Components
 
 Explain only the components an engineer needs to modify or debug:
 
@@ -108,7 +142,7 @@ Explain only the components an engineer needs to modify or debug:
 - Depends on:
 - Modification risk:
 
-## 8. Tests and Validation Strategy
+## 11. Tests and Validation Strategy
 
 - Fast tests:
 - Integration tests:
@@ -116,12 +150,23 @@ Explain only the components an engineer needs to modify or debug:
 - Manual smoke test:
 - Checks not run:
 
-## 9. Main Dependencies and Their Project Roles
+## 12. Explicit Conventions and Invariants
+
+List project rules that future edits should preserve:
+
+- CLI/config naming:
+- Config override order:
+- Output naming:
+- GPU/process/model assumptions:
+- Backward compatibility assumptions:
+- Data contract invariants:
+
+## 13. Main Dependencies and Their Project Roles
 
 | Dependency | Role in this project | Where used | Evidence |
 | --- | --- | --- | --- |
 
-## 10. Risks, Unknowns, and Follow-Ups
+## 14. Risks, Unknowns, and Follow-Ups
 
 - Risk:
 - Unknown:
@@ -162,7 +207,44 @@ Explain the project in plain language:
 - Start command or entrypoint:
 - Expected final output:
 
-## 3. Before the Code Runs
+## 3. PLAN-Style Workflow Map
+
+Explain the selected workflow before line-level code analysis.
+
+### Goal and Expected Behavior
+
+| Goal | Expected behavior | Evidence |
+| --- | --- | --- |
+
+### Command and Config Contracts
+
+| Command/Config/Input | Role | Example/default | Override or validation rule | Evidence |
+| --- | --- | --- | --- | --- |
+
+### Runtime Stage Map
+
+| Stage | Consumes | Code responsibility | Produces | Next stage | Evidence |
+| --- | --- | --- | --- | --- | --- |
+
+### Output Contracts
+
+| Output | Location/name | Schema/content | Naming/overwrite rule | Evidence |
+| --- | --- | --- | --- | --- |
+
+### Validation and Error Contracts
+
+| Invalid condition | Expected behavior | Where handled | Evidence |
+| --- | --- | --- | --- |
+
+### Explicit Conventions
+
+- CLI/config naming:
+- Config override order:
+- Output naming:
+- Model/GPU/process assumptions:
+- Data contract invariants:
+
+## 4. Before the Code Runs
 
 Explain setup that affects execution:
 
@@ -171,7 +253,7 @@ Explain setup that affects execution:
 - External files/data:
 - Dependencies/libraries that matter in this path:
 
-## 4. Full Runtime Code Walkthrough
+## 5. Full Runtime Code Walkthrough
 
 Repeat this block for each meaningful execution step. Each step must be tied to exact lines or tight line ranges when possible.
 
@@ -235,7 +317,7 @@ Beginner note:
 
 Use another full step block. Do not skip important calls simply because they are in a different file.
 
-## 5. Important Loops and Branches
+## 6. Important Loops and Branches
 
 For each important loop/branch:
 
@@ -249,7 +331,7 @@ For each important loop/branch:
 - Next code path after the loop/branch:
 - Evidence:
 
-## 6. Data and Shape Timeline
+## 7. Data and Shape Timeline
 
 Show the data contract changing over time:
 
@@ -265,14 +347,23 @@ Examples:
 - Hidden states: `[B, T, D]`
 - HTTP body: `{ user_id, items[], created_at }`
 
-## 7. Libraries, Classes, Functions, and Methods Used in This Runtime Path
+## 8. Libraries, Classes, Functions, and Methods Used in This Runtime Path
 
 Explain only libraries/classes/functions/methods actually used in the walkthrough:
 
 | Symbol | Type | Step | Lines | What it does here | Input | Output | Beginner explanation |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 
-## 8. Where to Read Next
+## 9. Acceptance Checks and Learning Exercises
+
+Use this section like a small study plan:
+
+| Check/exercise | Command or file | What it proves | Evidence/notes |
+| --- | --- | --- | --- |
+
+Include safe commands such as `--help`, focused tests, dry-runs, or shape-printing probes when available.
+
+## 10. Where to Read Next
 
 Give a learning path:
 
@@ -280,7 +371,7 @@ Give a learning path:
 2. Read `<file>` to understand ...
 3. Skip `<file>` initially because ...
 
-## 9. Unknowns and Items That Need Runtime Verification
+## 11. Unknowns and Items That Need Runtime Verification
 
 List:
 

@@ -12,6 +12,14 @@ PROJECT_CODE_GUIDE.md
 
 Choose a guide mode before writing.
 
+Before detailed mode-specific analysis, build a PLAN-style workflow map with:
+
+- Overall goal and expected behavior
+- Command, config, input, model/service/weight, and output contracts
+- Runtime stages, with what each stage consumes, does, produces, and where it can fail
+- Validation/error behavior
+- Explicit conventions such as override order, output naming, and process/GPU/model assumptions
+
 ## Language
 
 Default to English.
@@ -29,9 +37,13 @@ Include:
 - Install/run/test/debug commands
 - Entrypoints and high-level runtime flow
 - Config and environment variables
+- CLI/config/input/output contracts
+- Workflow stage map
+- Validation/error cases
 - Main data contracts and outputs
 - Files to modify for common tasks
 - Risky files and hidden coupling
+- Explicit conventions and invariants
 - Unknowns and checks not run
 
 ### Beginner Full Runtime Code Walkthrough
@@ -50,6 +62,8 @@ Do not write a module catalog or file responsibility list. Follow the runtime pa
 - Caller/callee relationship for important local calls
 - Next code path
 - Beginner note
+
+Use the PLAN-style workflow map as the backbone: each runtime stage should be expanded into the exact code lines or line ranges that implement it.
 
 ### Both
 

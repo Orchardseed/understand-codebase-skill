@@ -7,6 +7,8 @@ The skill now supports two guide modes:
 - **Engineer Fast-Start:** for engineers who need to run, test, debug, modify, or quickly onboard to a project.
 - **Beginner Full Runtime Code Walkthrough:** for learners who want a full-flow, line-level explanation of the actual execution path, including exact lines or line ranges, code goals, libraries/methods, inputs, outputs, shape/schema, and the next code path.
 
+Both modes use a PLAN-style workflow map before detailed analysis: goal, command/config/input contracts, runtime stages, output contracts, validation/error cases, and explicit conventions. This makes the generated guide useful as both a study path and a maintenance reference.
+
 The guide defaults to English. If the user requests another language, or appears to prefer another language, the agent should ask whether to keep English or switch.
 
 ## Repository Layout

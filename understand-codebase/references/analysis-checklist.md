@@ -63,17 +63,23 @@ Use this when the selected mode is Engineer Fast-Start.
 
 Capture:
 
+- Overall goal and expected post-run behavior
 - Install command
 - Run command
 - Test command
 - Debug/log commands and locations
+- CLI arguments, config fields, defaults, and override order
+- Input validation rules and expected error behavior
 - Required configs and environment variables
 - Primary entrypoint and high-level flow
+- Workflow stage map: consumes, does, produces, failure cases
 - Main data contracts and outputs
+- Output file/response/log/checkpoint schemas and naming rules
 - Common modification tasks and files
 - Risky files and hidden coupling
 - External service assumptions
 - Commands that were run and commands not run
+- Explicit conventions and invariants future edits must preserve
 
 Prefer concise tables and file references.
 
@@ -83,6 +89,12 @@ Use this when the selected mode is Beginner Full Runtime Code Walkthrough.
 
 Trace code in execution order. For each step, capture:
 
+- PLAN-style workflow map before line-level analysis:
+- Overall goal and expected behavior
+- CLI/config/input/model/output contracts
+- Runtime stage map
+- Validation/error contracts
+- Explicit conventions and invariants
 - Step number
 - Plain-language action
 - File and exact line number or tight line range, or closest function/class when exact lines are not reliable
@@ -98,6 +110,8 @@ Trace code in execution order. For each step, capture:
 - Beginner note
 
 This mode should feel like following a debugger plus a teacher explaining each important line. Avoid replacing the walkthrough with a module catalog, file inventory, or responsibility list.
+
+Use the workflow map to decide which code path to expand first. The line-level walkthrough should explain how the code implements each workflow stage.
 
 ## 7. Data and Shape Trace
 
@@ -169,9 +183,10 @@ Before finishing the guide, check:
 
 - The selected mode is named near the top.
 - Startup and entrypoints are explained.
+- The guide includes a PLAN-style workflow map: goal, contracts, stages, outputs, validation/errors, and conventions.
 - Data sources and outputs are traced.
 - Shape/schema claims have evidence labels.
 - Engineer Fast-Start mode includes run/test/debug/modify guidance.
-- Beginner Full Runtime Code Walkthrough mode follows execution order with exact lines or tight line ranges, line-level explanations, libraries/methods, inputs, outputs, caller/callee transitions, and next code path.
+- Beginner Full Runtime Code Walkthrough mode connects the workflow map to execution order with exact lines or tight line ranges, line-level explanations, libraries/methods, inputs, outputs, caller/callee transitions, and next code path.
 - Unknowns are explicit.
 - No irrelevant personal local paths are included.

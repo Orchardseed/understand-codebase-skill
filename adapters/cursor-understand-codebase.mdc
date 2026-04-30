@@ -19,6 +19,14 @@ Select a guide mode:
 - Beginner Full Runtime Code Walkthrough: for detailed new-learner study through actual execution, with exact lines or line ranges, code goals, libraries/methods, inputs, outputs, shape/schema, caller/callee transitions, and next code path.
 - Both: concise engineer summary first, detailed runtime tutorial second.
 
+Before detailed analysis, build a PLAN-style workflow map:
+
+- Overall goal and expected behavior
+- Command, config, input, model/service/weight, and output contracts
+- Runtime stages, with what each stage consumes, does, produces, and where it can fail
+- Validation/error behavior
+- Explicit conventions such as override order, output naming, and process/GPU/model assumptions
+
 Infer the mode when obvious. If unclear, ask:
 
 ```text
@@ -42,6 +50,10 @@ Engineer Fast-Start must include:
 - Install/run/test/debug commands
 - Entrypoints and high-level runtime flow
 - Configs and environment variables
+- CLI/config/input/output contracts
+- Workflow stage map
+- Validation/error cases
+- Explicit conventions and invariants
 - Data contracts and outputs
 - Files to modify for common tasks
 - Risks and unknowns
