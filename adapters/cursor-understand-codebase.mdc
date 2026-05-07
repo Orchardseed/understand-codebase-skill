@@ -22,10 +22,15 @@ Select a guide mode:
 Before detailed analysis, build a PLAN-style workflow map:
 
 - Overall goal and expected behavior
+- Major documented workflows and which workflow is expanded in detail
 - Command, config, input, model/service/weight, and output contracts
 - Runtime stages, with what each stage consumes, does, produces, and where it can fail
 - Validation/error behavior
 - Explicit conventions such as override order, output naming, and process/GPU/model assumptions
+
+Before tracing code, read README/docs/examples when present and extract the project runbook: purpose, install requirements, repository layout, commands, config fields, data formats, outputs, post-run utilities, and common issues. Check important documentation claims against code/config/tests/safe runtime commands and label them as Confirmed, Runtime verified, Static inference, Unknown, or Mismatch.
+
+Do not impose an artificial length limit on `PROJECT_CODE_GUIDE.md`. Keep summaries navigable, but fully expand the details needed for running, debugging, modifying, or learning the selected runtime path.
 
 Infer the mode when obvious. If unclear, ask:
 
@@ -47,7 +52,10 @@ If the user chooses "default", follow the primary documented end-to-end flow and
 
 Engineer Fast-Start must include:
 
+- README/docs-derived operating summary
 - Install/run/test/debug commands
+- Workflow coverage matrix
+- Command cookbook
 - Entrypoints and high-level runtime flow
 - Configs and environment variables
 - CLI/config/input/output contracts
@@ -56,10 +64,12 @@ Engineer Fast-Start must include:
 - Explicit conventions and invariants
 - Data contracts and outputs
 - Files to modify for common tasks
+- Documentation claims versus code evidence
 - Risks and unknowns
 
 Beginner Full Runtime Code Walkthrough must include step blocks with:
 
+- README-style project learning route and workflow coverage matrix before the selected path
 - File and exact line or tight line-range reference
 - Lines explained, with one explanation per important line or tight line range
 - Code goal completed by those exact lines
@@ -73,6 +83,7 @@ Beginner Full Runtime Code Walkthrough must include step blocks with:
 - Beginner note
 
 Do not replace this mode with a module catalog or file responsibility list.
+Do not remove important line-level detail just to make the guide shorter.
 
 Use evidence labels:
 

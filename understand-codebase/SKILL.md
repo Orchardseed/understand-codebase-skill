@@ -1,6 +1,6 @@
 ---
 name: understand-codebase
-description: Generate a single PROJECT_CODE_GUIDE.md for understanding an unfamiliar codebase, with selectable guide modes. Use Engineer Fast-Start mode when the user needs to run, test, debug, modify, or quickly onboard to a project. Use Beginner Full Runtime Code Walkthrough mode when the user wants a very detailed learning guide that follows the actual execution path line by line or line-range by line-range, explaining which code completes what goal, which libraries/classes/functions/methods are used, inputs, outputs, data shapes or schemas, and the next code path. Also use for finding entrypoints/config/core classes, tracing data sources and outputs, understanding training/inference/API/CLI/data-processing flows, identifying loops or pipelines, or creating a guided Markdown overview.
+description: Generate a single PROJECT_CODE_GUIDE.md for understanding an unfamiliar codebase, with selectable guide modes. Use Engineer Fast-Start mode when the user needs a README-style runbook for running, testing, debugging, modifying, or quickly onboarding to a project. Use Beginner Full Runtime Code Walkthrough mode when the user wants a detailed learning guide that first maps the project workflow and then follows the actual execution path line by line or line-range by line-range, explaining which code completes what goal, which libraries/classes/functions/methods are used, inputs, outputs, data shapes or schemas, and the next code path. Also use for finding entrypoints/config/core classes, tracing data sources and outputs, understanding training/inference/API/CLI/data-processing flows, identifying loops or pipelines, or creating a guided Markdown overview.
 ---
 
 # Understand Codebase
@@ -9,15 +9,54 @@ Use this skill to turn an unfamiliar repository into one coherent guide: `PROJEC
 
 The skill supports two distinct guide modes. Do not blend them into a vague hybrid unless the user asks for both.
 
+## Output Depth Policy
+
+Do not impose an artificial size limit on the generated `PROJECT_CODE_GUIDE.md`. Make the guide as detailed as the selected mode and project complexity require.
+
+Be concise in summaries, but fully expand sections that are important for understanding, running, debugging, modifying, or learning the code:
+
+- Full runtime walkthrough steps
+- Line or tight line-range explanations
+- Caller/callee transitions
+- Input/output shape, schema, and data provenance
+- Config, CLI, output, validation, and error contracts
+- Multi-stage project workflows
+- README/documentation claims that must be checked against code
+
+If the guide becomes long, improve navigation with a table of contents, clear section headings, and workflow stage links. Do not remove necessary detail just to shorten the file.
+
+## README-Style Runbook Context
+
+Before tracing code, read project-facing documentation when present:
+
+- `README*`
+- `docs/`, `examples/`, `notebooks/`, tutorials, quickstarts, and usage guides
+- CLI help text, package scripts, Makefiles, Docker files, CI workflows, and config examples
+
+Extract the project's operating model from those docs:
+
+- What the project provides
+- Environment and dependency requirements
+- Repository layout
+- Data/input formats
+- Preprocessing or preparation steps
+- Training, inference, evaluation, API, CLI, UI, worker, or data-processing commands
+- Config fields, defaults, and override order
+- Output files, response schemas, logs, checkpoints, metrics, naming, and overwrite behavior
+- Common issues, debugging advice, and known limitations
+
+Then compare documentation claims with code evidence. Mark each important claim as confirmed, runtime verified, static inference, or unknown. If docs and code disagree, call that out explicitly.
+
 ## PLAN-Style Workflow Map
 
 Before writing detailed sections, build a workflow map similar to a project implementation plan:
 
 1. State the overall goal and expected behavior.
-2. Identify the user-facing commands, config files, inputs, weights/models/services, outputs, and validation checks.
-3. Summarize the workflow as stages, with each stage describing what is consumed, what work is done, what is produced, and what can fail.
-4. Record explicit conventions, such as preferred CLI names, config override order, output file naming, and assumptions about GPU/process/model behavior.
-5. Use this workflow map as the backbone for both guide modes.
+2. Identify the major workflows exposed by the project, such as preprocessing, training, inference, evaluation, visualization, serving, background jobs, or UI operation.
+3. Identify the user-facing commands, config files, inputs, weights/models/services, outputs, and validation checks.
+4. Summarize each selected workflow as stages, with each stage describing what is consumed, what work is done, what is produced, and what can fail.
+5. Record explicit conventions, such as preferred CLI names, config override order, output file naming, and assumptions about GPU/process/model behavior.
+6. Use this workflow map as the backbone for both guide modes.
 
 This workflow map is especially important for learning-oriented guides because it tells the reader what the code is trying to achieve before the line-level walkthrough begins.
 
@@ -73,7 +112,10 @@ Use this mode for experienced engineers who need to operate or modify the projec
 Prioritize:
 
 - Overall goal and expected behavior contract
+- README/docs-derived operating summary
 - How to install, configure, run, and test the project
+- Workflow coverage matrix across major documented flows
+- Command cookbook with copyable commands and what each command proves or produces
 - Entrypoints and startup commands
 - CLI/config override rules and important defaults
 - Required environment variables and configs
@@ -85,6 +127,7 @@ Prioritize:
 - Debugging/logging locations
 - Acceptance tests and smoke commands
 - Explicit project conventions and invariants
+- Documentation claims versus code evidence
 - Risky files, hidden coupling, external services, and shape/schema assumptions
 
 Avoid long teaching explanations. Prefer concise tables, command blocks, file references, and practical notes.
@@ -95,14 +138,16 @@ Use this mode for learning how the code actually executes in detail.
 
 This mode is not a module catalog. Do not mainly list "what each file does" or "what each module is responsible for." Instead, write a full runtime code walkthrough in the order code runs.
 
-Start with a PLAN-style workflow map before the line-level walkthrough:
+Start with a README-style project learning route and PLAN-style workflow map before the line-level walkthrough:
 
 - Overall goal: what the selected command/workflow is supposed to accomplish.
+- Full project workflow map: what major workflows exist and which one is expanded in detail.
 - Inputs and contracts: CLI args, config fields, files, datasets, models, weights, services, or request payloads.
 - Runtime stages: a compact stage table from start command to final output.
 - Output contracts: generated files, response schemas, metrics, logs, checkpoints, or UI state.
 - Validation/error contracts: what inputs are rejected and where errors should appear.
 - Explicit conventions: names, override order, folder layout, GPU/process rules, or other assumptions.
+- Documentation claims versus code evidence: what the README/docs say and whether code confirms it.
 
 For each walkthrough step, include:
 
@@ -133,16 +178,18 @@ If a file is important but not reached in the selected runtime path, mention it 
 ## General Workflow
 
 1. Inspect top-level context: README, package metadata, dependency files, config files, scripts, Docker files, notebooks, source directories, and tests.
-2. Identify project type: backend, frontend, CLI, library, ML training, ML inference, data pipeline, worker system, desktop/mobile app, or mixed system.
-3. Resolve language, guide mode, and specific flow using the clarification rules above.
-4. Find entrypoints from docs, package scripts, Makefiles, Dockerfiles, main blocks, route registration, CLI definitions, notebooks, or framework conventions.
-5. Trace the selected runtime flow from entrypoint to output.
-6. Trace data sources, transformations, schemas, tensor shapes, and destinations.
-7. Identify core modules, classes, functions, loops, pipelines, services, and workflows relevant to the selected mode.
-8. Explain major dependencies by their role in the selected flow.
-9. Identify tests, debug commands, logs, and safe validation paths.
-10. Write one `PROJECT_CODE_GUIDE.md` using the matching template.
-11. Clearly label confirmed facts, runtime-verified facts, static inferences, and unknowns.
+2. Build a docs-derived runbook map: purpose, commands, workflows, configs, data contracts, outputs, and common issues.
+3. Identify project type: backend, frontend, CLI, library, ML training, ML inference, data pipeline, worker system, desktop/mobile app, or mixed system.
+4. Resolve language, guide mode, and specific flow using the clarification rules above.
+5. Find entrypoints from docs, package scripts, Makefiles, Dockerfiles, main blocks, route registration, CLI definitions, notebooks, or framework conventions.
+6. Trace the selected runtime flow from entrypoint to output.
+7. Trace data sources, transformations, schemas, tensor shapes, and destinations.
+8. Identify core modules, classes, functions, loops, pipelines, services, and workflows relevant to the selected mode.
+9. Explain major dependencies by their role in the selected flow.
+10. Identify tests, debug commands, logs, and safe validation paths.
+11. Compare important README/docs claims with code evidence.
+12. Write one `PROJECT_CODE_GUIDE.md` using the matching template, with no artificial length cap.
+13. Clearly label confirmed facts, runtime-verified facts, static inferences, and unknowns.
 
 ## Reference Files
 
@@ -217,9 +264,12 @@ Before finishing `PROJECT_CODE_GUIDE.md`, check:
 - The selected mode is stated near the top.
 - Language choice matches the user request or clarification answer.
 - Composite-flow choice is stated if the project has multiple major flows.
+- README/docs-derived workflows, commands, configs, outputs, and common issues are reflected when available.
 - A PLAN-style workflow map appears before detailed mode-specific analysis.
 - Data source, input, output, and shape/schema claims have evidence labels.
 - Engineer mode includes commands, tests, modification points, and risks.
 - Beginner Full Runtime Code Walkthrough mode includes workflow contracts first, then follows actual execution order with exact lines or line ranges, line-level explanations, libraries/methods, inputs, outputs, and next code path.
+- The guide does not omit important detail merely to stay short.
+- Important README/docs claims are either confirmed, runtime verified, marked as static inference, marked unknown, or flagged as mismatches.
 - Unknowns are explicit.
 - No irrelevant personal local paths or machine-specific details are included.

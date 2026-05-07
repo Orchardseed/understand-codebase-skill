@@ -15,10 +15,15 @@ Choose a guide mode before writing.
 Before detailed mode-specific analysis, build a PLAN-style workflow map with:
 
 - Overall goal and expected behavior
+- Major documented workflows and which workflow is expanded in detail
 - Command, config, input, model/service/weight, and output contracts
 - Runtime stages, with what each stage consumes, does, produces, and where it can fail
 - Validation/error behavior
 - Explicit conventions such as override order, output naming, and process/GPU/model assumptions
+
+Before tracing code, read README/docs/examples when present and extract the project runbook: purpose, install requirements, repository layout, commands, config fields, data formats, outputs, post-run utilities, and common issues. Check important documentation claims against code/config/tests/safe runtime commands and label them as Confirmed, Runtime verified, Static inference, Unknown, or Mismatch.
+
+Do not impose an artificial length limit on the generated guide. Keep summaries easy to scan, but fully expand details needed for running, debugging, modifying, or learning the selected runtime path.
 
 ## Language
 
@@ -34,7 +39,10 @@ Use for quick handoff, onboarding, running, testing, debugging, modifying, entry
 
 Include:
 
+- README/docs-derived operating summary
 - Install/run/test/debug commands
+- Workflow coverage matrix
+- Command cookbook
 - Entrypoints and high-level runtime flow
 - Config and environment variables
 - CLI/config/input/output contracts
@@ -44,13 +52,14 @@ Include:
 - Files to modify for common tasks
 - Risky files and hidden coupling
 - Explicit conventions and invariants
+- Documentation claims versus code evidence
 - Unknowns and checks not run
 
 ### Beginner Full Runtime Code Walkthrough
 
 Use for learning how the code actually executes in full detail.
 
-Do not write a module catalog or file responsibility list. Follow the runtime path like a debugger and explain the important lines like a teacher. For each step include:
+Do not write a module catalog or file responsibility list. First provide a README-style project learning route and workflow coverage matrix, then follow the selected runtime path like a debugger and explain the important lines like a teacher. For each step include:
 
 - File and exact line or tight line-range reference
 - Lines explained, with one explanation per important line or tight line range
@@ -64,6 +73,8 @@ Do not write a module catalog or file responsibility list. Follow the runtime pa
 - Beginner note
 
 Use the PLAN-style workflow map as the backbone: each runtime stage should be expanded into the exact code lines or line ranges that implement it.
+
+If the selected path is complex, keep expanding the necessary line ranges, caller/callee transitions, and shape/schema changes. Do not remove important detail just to make the markdown shorter.
 
 ### Both
 

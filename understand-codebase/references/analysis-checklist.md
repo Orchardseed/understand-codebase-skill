@@ -21,9 +21,28 @@ Infer when obvious. Ask one focused question when unclear.
 ## 2. Top-Level Context
 
 - Read README, docs, examples, notebooks, and comments that explain purpose.
+- Treat README/docs as the first source for the project's operating model: what users run, what data they provide, what outputs they expect, and what issues they hit.
 - Inspect dependency files such as `package.json`, `pyproject.toml`, `requirements.txt`, `Cargo.toml`, `go.mod`, `pom.xml`, or `environment.yml`.
 - Inspect scripts, Makefiles, Dockerfiles, compose files, CI workflows, and task runners.
 - Identify generated, vendored, build, cache, and artifact directories so they can be skipped initially.
+
+## 2A. README / Docs Runbook Extraction
+
+Capture from README and user-facing docs when available:
+
+- Project purpose and what it provides
+- Install/environment requirements
+- Repository layout
+- Data/input formats and required columns, keys, fields, shapes, or files
+- Preparation or preprocessing steps
+- Main commands for training, inference, evaluation, serving, UI, workers, CLIs, or data processing
+- Config files, important fields, defaults, and override priority
+- Output files, responses, logs, checkpoints, metrics, naming rules, and overwrite behavior
+- Post-run utilities and visualization/reporting commands
+- Multi-process, GPU, service, database, or external dependency assumptions
+- Common issues and debugging advice
+
+Then check important documentation claims against code, configs, tests, or safe runtime commands. Mark each as Confirmed, Runtime verified, Static inference, Unknown, or Mismatch.
 
 ## 3. Project Type
 
@@ -64,17 +83,22 @@ Use this when the selected mode is Engineer Fast-Start.
 Capture:
 
 - Overall goal and expected post-run behavior
+- README/docs-derived operating summary
 - Install command
 - Run command
 - Test command
+- Command cookbook for common operations
 - Debug/log commands and locations
 - CLI arguments, config fields, defaults, and override order
 - Input validation rules and expected error behavior
 - Required configs and environment variables
 - Primary entrypoint and high-level flow
+- Workflow coverage matrix across major documented flows
 - Workflow stage map: consumes, does, produces, failure cases
 - Main data contracts and outputs
 - Output file/response/log/checkpoint schemas and naming rules
+- README/docs claims versus code evidence
+- Common issues and debugging map
 - Common modification tasks and files
 - Risky files and hidden coupling
 - External service assumptions
@@ -89,12 +113,15 @@ Use this when the selected mode is Beginner Full Runtime Code Walkthrough.
 
 Trace code in execution order. For each step, capture:
 
+- README/docs-derived project learning route before selecting the runtime path
+- Workflow coverage matrix for major flows, such as preprocessing, training, inference, evaluation, visualization, serving, workers, or UI operation
 - PLAN-style workflow map before line-level analysis:
 - Overall goal and expected behavior
 - CLI/config/input/model/output contracts
 - Runtime stage map
 - Validation/error contracts
 - Explicit conventions and invariants
+- README/docs claims versus code evidence
 - Step number
 - Plain-language action
 - File and exact line number or tight line range, or closest function/class when exact lines are not reliable
@@ -112,6 +139,8 @@ Trace code in execution order. For each step, capture:
 This mode should feel like following a debugger plus a teacher explaining each important line. Avoid replacing the walkthrough with a module catalog, file inventory, or responsibility list.
 
 Use the workflow map to decide which code path to expand first. The line-level walkthrough should explain how the code implements each workflow stage.
+
+Do not shorten the walkthrough just because the generated markdown is long. Use clear navigation and headings, but keep the detail needed for a beginner to follow the code.
 
 ## 7. Data and Shape Trace
 
@@ -183,10 +212,14 @@ Before finishing the guide, check:
 
 - The selected mode is named near the top.
 - Startup and entrypoints are explained.
+- README/docs were read when present, and their commands, configs, data formats, outputs, and common issues are reflected.
 - The guide includes a PLAN-style workflow map: goal, contracts, stages, outputs, validation/errors, and conventions.
+- Composite projects include a workflow coverage matrix and state which path is expanded.
 - Data sources and outputs are traced.
 - Shape/schema claims have evidence labels.
 - Engineer Fast-Start mode includes run/test/debug/modify guidance.
 - Beginner Full Runtime Code Walkthrough mode connects the workflow map to execution order with exact lines or tight line ranges, line-level explanations, libraries/methods, inputs, outputs, caller/callee transitions, and next code path.
+- Important README/docs claims are confirmed, runtime verified, marked as static inference, marked unknown, or flagged as mismatches.
+- Important detail was not omitted for brevity.
 - Unknowns are explicit.
 - No irrelevant personal local paths are included.

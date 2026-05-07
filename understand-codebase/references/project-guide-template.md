@@ -24,6 +24,8 @@ Use this for quick engineering handoff, running, testing, debugging, and modifyi
 
 Guide mode: Engineer Fast-Start
 
+Output depth policy: This guide has no artificial length limit. Keep summaries concise, but include all details needed to run, test, debug, modify, and verify the project.
+
 ## Evidence Legend
 
 - Confirmed:
@@ -50,7 +52,27 @@ Guide mode: Engineer Fast-Start
 - Primary output:
 - Most important directories:
 
-## 3. Command, Config, and Input Contracts
+## 3. Documentation-Derived Operating Summary
+
+Summarize what the README/docs say before tracing code:
+
+- What the project provides:
+- Required environment/dependencies:
+- Main user workflows:
+- Preprocessing/preparation steps:
+- Training/inference/API/CLI/UI/worker flows:
+- Post-run utilities:
+- Common issues mentioned by docs:
+- Documentation files read:
+
+## 4. Workflow Coverage Matrix
+
+List the major documented and discovered workflows. Mark which ones are expanded in this guide.
+
+| Workflow | User command/entrypoint | Input | Output | Expanded here? | Evidence |
+| --- | --- | --- | --- | --- | --- |
+
+## 5. Command, Config, and Input Contracts
 
 ### Commands
 
@@ -67,7 +89,7 @@ Guide mode: Engineer Fast-Start
 | Input | Required shape/schema/type | Validation rule | Failure behavior | Evidence |
 | --- | --- | --- | --- | --- |
 
-## 4. Runbook
+## 6. Runbook
 
 ### Install
 
@@ -94,14 +116,19 @@ Guide mode: Engineer Fast-Start
 - Log location:
 - Common failure points:
 
-## 5. Workflow Stage Map
+### Command Cookbook
+
+| Task | Command | What it does | Expected output/artifact | When to use | Evidence |
+| --- | --- | --- | --- | --- | --- |
+
+## 7. Workflow Stage Map
 
 Summarize the workflow as a stage table before diving into files:
 
 | Stage | Consumes | Does | Produces | Failure cases | Evidence |
 | --- | --- | --- | --- | --- | --- |
 
-## 6. Entrypoints and Runtime Flow
+## 8. Entrypoints and Runtime Flow
 
 Summarize the main path:
 
@@ -113,26 +140,26 @@ Summarize the main path:
 
 Add a Mermaid flowchart when it improves scanning.
 
-## 7. Output Contracts
+## 9. Output Contracts
 
 Explain generated files, responses, logs, checkpoints, metrics, or UI state:
 
 | Output | Location/name | Schema/content | Naming/overwrite rule | Evidence |
 | --- | --- | --- | --- | --- |
 
-## 8. Data Contracts and Shape Summary
+## 10. Data Contracts and Shape Summary
 
 Summarize key inputs and outputs:
 
 | Data | Source | Shape/Schema/Type | Destination | Evidence |
 | --- | --- | --- | --- | --- |
 
-## 9. Key Files for Modification
+## 11. Key Files for Modification
 
 | Task | File(s) | What to change | Risk | Evidence |
 | --- | --- | --- | --- | --- |
 
-## 10. Core Components
+## 12. Core Components
 
 Explain only the components an engineer needs to modify or debug:
 
@@ -142,7 +169,14 @@ Explain only the components an engineer needs to modify or debug:
 - Depends on:
 - Modification risk:
 
-## 11. Tests and Validation Strategy
+## 13. Common Issues and Debugging Map
+
+Convert README/doc issues and code-discovered failure points into actionable debugging notes:
+
+| Symptom | Likely cause | Where to check | Safe command/check | Evidence |
+| --- | --- | --- | --- | --- |
+
+## 14. Tests and Validation Strategy
 
 - Fast tests:
 - Integration tests:
@@ -150,7 +184,7 @@ Explain only the components an engineer needs to modify or debug:
 - Manual smoke test:
 - Checks not run:
 
-## 12. Explicit Conventions and Invariants
+## 15. Explicit Conventions and Invariants
 
 List project rules that future edits should preserve:
 
@@ -161,12 +195,21 @@ List project rules that future edits should preserve:
 - Backward compatibility assumptions:
 - Data contract invariants:
 
-## 13. Main Dependencies and Their Project Roles
+## 16. Documentation Claims Versus Code Evidence
+
+Check important README/docs claims against code, config, tests, or safe runtime checks:
+
+| Claim from docs | Code/config evidence | Status | Notes |
+| --- | --- | --- | --- |
+
+Use status values: Confirmed, Runtime verified, Static inference, Unknown, or Mismatch.
+
+## 17. Main Dependencies and Their Project Roles
 
 | Dependency | Role in this project | Where used | Evidence |
 | --- | --- | --- | --- |
 
-## 14. Risks, Unknowns, and Follow-Ups
+## 18. Risks, Unknowns, and Follow-Ups
 
 - Risk:
 - Unknown:
@@ -181,6 +224,8 @@ Use this for a very detailed new-learner guide through actual execution. This mo
 # Project Code Guide
 
 Guide mode: Beginner Full Runtime Code Walkthrough
+
+Output depth policy: This guide has no artificial length limit. Keep overview sections navigable, but fully expand the selected runtime path, important line ranges, shape/schema transitions, and caller/callee transitions.
 
 ## Evidence Legend
 
@@ -198,7 +243,24 @@ Explain the project in plain language:
 - What the selected runtime flow does
 - What concepts a beginner should know first
 
-## 2. Selected Runtime Path
+## 2. Project Learning Route
+
+Use README/docs to give the learner a map of the whole project before focusing on code:
+
+- Documents read:
+- What the README/docs say the project provides:
+- The usual user journey:
+- Preparation or preprocessing steps:
+- Main operation flows:
+- Post-run or analysis utilities:
+- Common issues a learner should know:
+
+### Workflow Coverage Matrix
+
+| Workflow | Purpose | Entry command/file | Input data | Output | Expanded in this guide? | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+
+## 3. Selected Runtime Path
 
 - User-selected focus:
 - Default path used:
@@ -207,7 +269,7 @@ Explain the project in plain language:
 - Start command or entrypoint:
 - Expected final output:
 
-## 3. PLAN-Style Workflow Map
+## 4. PLAN-Style Workflow Map
 
 Explain the selected workflow before line-level code analysis.
 
@@ -244,7 +306,14 @@ Explain the selected workflow before line-level code analysis.
 - Model/GPU/process assumptions:
 - Data contract invariants:
 
-## 4. Before the Code Runs
+### Documentation Claims Versus Code Evidence
+
+| Claim from README/docs | Code/config/test evidence | Status | Learner note |
+| --- | --- | --- | --- |
+
+Use status values: Confirmed, Runtime verified, Static inference, Unknown, or Mismatch.
+
+## 5. Before the Code Runs
 
 Explain setup that affects execution:
 
@@ -253,7 +322,7 @@ Explain setup that affects execution:
 - External files/data:
 - Dependencies/libraries that matter in this path:
 
-## 5. Full Runtime Code Walkthrough
+## 6. Full Runtime Code Walkthrough
 
 Repeat this block for each meaningful execution step. Each step must be tied to exact lines or tight line ranges when possible.
 
@@ -317,7 +386,7 @@ Beginner note:
 
 Use another full step block. Do not skip important calls simply because they are in a different file.
 
-## 6. Important Loops and Branches
+## 7. Important Loops and Branches
 
 For each important loop/branch:
 
@@ -331,7 +400,7 @@ For each important loop/branch:
 - Next code path after the loop/branch:
 - Evidence:
 
-## 7. Data and Shape Timeline
+## 8. Data and Shape Timeline
 
 Show the data contract changing over time:
 
@@ -347,14 +416,14 @@ Examples:
 - Hidden states: `[B, T, D]`
 - HTTP body: `{ user_id, items[], created_at }`
 
-## 8. Libraries, Classes, Functions, and Methods Used in This Runtime Path
+## 9. Libraries, Classes, Functions, and Methods Used in This Runtime Path
 
 Explain only libraries/classes/functions/methods actually used in the walkthrough:
 
 | Symbol | Type | Step | Lines | What it does here | Input | Output | Beginner explanation |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 
-## 9. Acceptance Checks and Learning Exercises
+## 10. Acceptance Checks and Learning Exercises
 
 Use this section like a small study plan:
 
@@ -363,7 +432,7 @@ Use this section like a small study plan:
 
 Include safe commands such as `--help`, focused tests, dry-runs, or shape-printing probes when available.
 
-## 10. Where to Read Next
+## 11. Where to Read Next
 
 Give a learning path:
 
@@ -371,7 +440,7 @@ Give a learning path:
 2. Read `<file>` to understand ...
 3. Skip `<file>` initially because ...
 
-## 11. Unknowns and Items That Need Runtime Verification
+## 12. Unknowns and Items That Need Runtime Verification
 
 List:
 

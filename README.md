@@ -4,10 +4,12 @@
 
 The skill now supports two guide modes:
 
-- **Engineer Fast-Start:** for engineers who need to run, test, debug, modify, or quickly onboard to a project.
-- **Beginner Full Runtime Code Walkthrough:** for learners who want a full-flow, line-level explanation of the actual execution path, including exact lines or line ranges, code goals, libraries/methods, inputs, outputs, shape/schema, and the next code path.
+- **Engineer Fast-Start:** for engineers who need a README-style runbook to run, test, debug, modify, or quickly onboard to a project.
+- **Beginner Full Runtime Code Walkthrough:** for learners who want a project learning route plus a full-flow, line-level explanation of the actual execution path, including exact lines or line ranges, code goals, libraries/methods, inputs, outputs, shape/schema, and the next code path.
 
-Both modes use a PLAN-style workflow map before detailed analysis: goal, command/config/input contracts, runtime stages, output contracts, validation/error cases, and explicit conventions. This makes the generated guide useful as both a study path and a maintenance reference.
+Both modes read README/docs first when available, extract the project's operating model, and then use a PLAN-style workflow map before detailed analysis: goal, workflow coverage, command/config/input contracts, runtime stages, output contracts, validation/error cases, and explicit conventions. This makes the generated guide useful as both a study path and a maintenance reference.
+
+The generated `PROJECT_CODE_GUIDE.md` has no artificial length limit. The guide should stay navigable, but detailed sections should stay detailed when they are needed to understand, run, debug, or modify the code.
 
 The guide defaults to English. If the user requests another language, or appears to prefer another language, the agent should ask whether to keep English or switch.
 
@@ -116,3 +118,5 @@ PROJECT_CODE_GUIDE.md
 ```
 
 It should clearly label what was confirmed from code, what was runtime verified, what was statically inferred, and what remains unknown.
+
+When README/docs exist, the guide should also compare important documentation claims against code evidence and flag mismatches or unknowns.
